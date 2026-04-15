@@ -42,7 +42,6 @@ export function evaluateScene(nodes: SceneNode[]): THREE.BufferGeometry | null {
   // Bake the transform into the geometry
   firstBrush.geometry.applyMatrix4(firstBrush.matrixWorld);
   let result = firstBrush.geometry.clone();
-  result.computeVertexNormals();
 
   // Combine each subsequent node
   for (let i = 1; i < nodes.length; i++) {

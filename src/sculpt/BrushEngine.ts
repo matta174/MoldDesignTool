@@ -109,54 +109,58 @@ function applyGrab(
   positions.setZ(i, positions.getZ(i) + direction.z * amount);
 }
 
-/** Average vertex position with neighbors within radius */
+/**
+ * Average vertex position with face-adjacent neighbors (Laplacian smooth).
+ * Uses face topology from non-indexed geometry: each group of 3 consecutive
+ * vertices forms a triangle. We average with the other two vertices in the
+ * same face, plus vertices from adjacent faces that share the brush region.
+ *
+ * Performance: O(1) per vertex via face-local topology instead of O(n) scan.
+ */
 function applySmooth(
   positions: THREE.BufferAttribute,
   i: number,
   center: THREE.Vector3,
   radius: number,
-  count: number,
+  _count: number,
   factor: number
 ): void {
-  // Simple approach: move vertex toward the center of nearby vertices
-  const radiusSq = radius * radius * 0.5;
   const vx = positions.getX(i);
   const vy = positions.getY(i);
   const vz = positions.getZ(i);
 
+  // Use face-local neighbors: the other 2 vertices in the same triangle
+  const faceBase = Math.floor(i / 3) * 3;
   let avgX = 0, avgY = 0, avgZ = 0;
   let neighbors = 0;
 
-  // Sample nearby vertices (stride by 3 for face grouping in non-indexed geo)
-  const faceBase = Math.floor(i / 3) * 3;
   for (let j = 0; j < 3; j++) {
     const ni = faceBase + j;
-    if (ni === i || ni >= count) continue;
-    const nx = positions.getX(ni);
-    const ny = positions.getY(ni);
-    const nz = positions.getZ(ni);
-    const dx = nx - vx, dy = ny - vy, dz = nz - vz;
-    if (dx * dx + dy * dy + dz * dz < radiusSq) {
-      avgX += nx;
-      avgY += ny;
-      avgZ += nz;
-      neighbors++;
-    }
+    if (ni === i) continue;
+    avgX += positions.getX(ni);
+    avgY += positions.getY(ni);
+    avgZ += positions.getZ(ni);
+    neighbors++;
   }
 
-  // Also sample some vertices near the center
-  const step = Math.max(1, Math.floor(count / 500));
-  for (let j = 0; j < count; j += step) {
-    if (j === i) continue;
-    const nx = positions.getX(j);
-    const ny = positions.getY(j);
-    const nz = positions.getZ(j);
-    const dx = nx - center.x, dy = ny - center.y, dz = nz - center.z;
-    if (dx * dx + dy * dy + dz * dz < radiusSq) {
-      avgX += nx;
-      avgY += ny;
-      avgZ += nz;
-      neighbors++;
+  // Also check the two adjacent faces (face before and after in the buffer)
+  // to get a wider smoothing neighborhood without a full scan
+  const neighborRadiusSq = radius * radius * 0.25;
+  const adjacentFaces = [faceBase - 3, faceBase + 3];
+  for (const adjBase of adjacentFaces) {
+    if (adjBase < 0 || adjBase + 2 >= positions.count) continue;
+    for (let j = 0; j < 3; j++) {
+      const ni = adjBase + j;
+      const nx = positions.getX(ni);
+      const ny = positions.getY(ni);
+      const nz = positions.getZ(ni);
+      const dx = nx - vx, dy = ny - vy, dz = nz - vz;
+      if (dx * dx + dy * dy + dz * dz < neighborRadiusSq) {
+        avgX += nx;
+        avgY += ny;
+        avgZ += nz;
+        neighbors++;
+      }
     }
   }
 
@@ -224,6 +228,9 @@ function applyCrease(
   toCenter.x -= vertexNormal.x * dot;
   toCenter.y -= vertexNormal.y * dot;
   toCenter.z -= vertexNormal.z * dot;
+
+  // Guard against zero-length vector (vertex at brush center or normal-aligned)
+  if (toCenter.lengthSq() < 1e-6) return;
   toCenter.normalize();
 
   // Also push inward along normal

@@ -100,7 +100,7 @@ export const useGeometricStore = create<GeometricState>((set) => ({
         position: { ...defaults.position },
         rotation: { x: 0, y: 0, z: 0 },
         scale: { x: 1, y: 1, z: 1 },
-        operation: state.nodes.length === 0 ? 'union' : 'union',
+        operation: 'union',
       };
       invalidateMold();
       return {

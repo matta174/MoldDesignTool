@@ -81,14 +81,22 @@ export function csgEvaluateBrushes(
 /**
  * Chain multiple CSG subtractions from a base geometry.
  * Useful for subtracting pour holes, vents, etc. from a mold box.
+ *
+ * Note: The base geometry is NOT mutated — a clone is used internally.
+ * Intermediate results from each step are disposed to prevent GPU memory leaks.
  */
 export function csgSubtractMultiple(
   base: THREE.BufferGeometry,
   subtracts: THREE.BufferGeometry[]
 ): THREE.BufferGeometry {
-  let current = base;
+  if (subtracts.length === 0) return base;
+
+  let current = base.clone();
   for (const sub of subtracts) {
-    current = csgEvaluate(current, sub, 'subtract');
+    const prev = current;
+    current = csgEvaluate(prev, sub, 'subtract');
+    // Dispose the intermediate result (but not the original base)
+    if (prev !== base) prev.dispose();
   }
   return current;
 }

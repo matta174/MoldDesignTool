@@ -76,8 +76,10 @@ export function generateTwoPartMold(
   const hollowMold = csgEvaluate(fullBox, model, 'subtract');
   fullBox.dispose();
 
-  // 4. Parting plane — split at ratio of model height
-  const partingY = bbox.min.y + modelSize.y * Math.max(0.1, Math.min(0.9, partingRatio));
+  // 4. Parting plane — split at ratio of model height, clamped to mold bounds
+  const rawPartingY = bbox.min.y + modelSize.y * Math.max(0.1, Math.min(0.9, partingRatio));
+  // Ensure parting plane stays at least 1mm inside the mold box
+  const partingY = Math.max(moldBottomY + 1, Math.min(moldTopY - 1, rawPartingY));
 
   // Create cutting volumes: large boxes for top and bottom halves
   const cutHeight = moldHeight + 20; // extend beyond mold

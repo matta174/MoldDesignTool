@@ -42,15 +42,18 @@ export function generateVaseGeometry(params: TemplateParams): THREE.BufferGeomet
     profile.push(pt.clone());
   }
 
-  // Mouth rim — small rounded edge
+  // Mouth rim — smooth rounded edge connecting outer wall to inner wall
   const topOuter = outerProfile[outerProfile.length - 1];
   const topInner = innerProfile[innerProfile.length - 1];
-  const rimSteps = 6;
+  const rimSteps = 8;
+  const RIM_BULGE_MM = 1.5;
   for (let i = 1; i <= rimSteps; i++) {
     const t = i / rimSteps;
+    // Use a half-arc (0 to π) so the rim bulges up smoothly and returns to
+    // the inner wall height without a flat discontinuity at the endpoint.
     const angle = t * Math.PI;
     const rimR = THREE.MathUtils.lerp(topOuter.x, topInner.x, t);
-    const rimY = topOuter.y + Math.sin(angle) * 1.5; // 1.5mm rim bulge
+    const rimY = topOuter.y + Math.sin(angle) * RIM_BULGE_MM;
     profile.push(new THREE.Vector2(rimR, rimY));
   }
 

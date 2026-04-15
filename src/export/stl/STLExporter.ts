@@ -73,6 +73,9 @@ function exportBinarySTL(geometry: THREE.BufferGeometry, name: string): ArrayBuf
   const vB = new THREE.Vector3();
   const vC = new THREE.Vector3();
   const faceNormal = new THREE.Vector3();
+  // Pre-allocate edge vectors outside the loop to avoid per-triangle GC pressure
+  const edge1 = new THREE.Vector3();
+  const edge2 = new THREE.Vector3();
 
   for (let i = 0; i < triangleCount; i++) {
     const idx = i * 3;
@@ -82,8 +85,8 @@ function exportBinarySTL(geometry: THREE.BufferGeometry, name: string): ArrayBuf
     vC.fromBufferAttribute(positions, idx + 2);
 
     // Compute face normal from vertices (more reliable than vertex normals for STL)
-    const edge1 = new THREE.Vector3().subVectors(vB, vA);
-    const edge2 = new THREE.Vector3().subVectors(vC, vA);
+    edge1.subVectors(vB, vA);
+    edge2.subVectors(vC, vA);
     faceNormal.crossVectors(edge1, edge2).normalize();
 
     // Normal
@@ -127,6 +130,9 @@ function exportAsciiSTL(geometry: THREE.BufferGeometry, name: string): string {
   const vB = new THREE.Vector3();
   const vC = new THREE.Vector3();
   const faceNormal = new THREE.Vector3();
+  // Pre-allocate edge vectors outside the loop to avoid per-triangle GC pressure
+  const edge1 = new THREE.Vector3();
+  const edge2 = new THREE.Vector3();
 
   for (let i = 0; i < triangleCount; i++) {
     const idx = i * 3;
@@ -135,8 +141,8 @@ function exportAsciiSTL(geometry: THREE.BufferGeometry, name: string): string {
     vB.fromBufferAttribute(positions, idx + 1);
     vC.fromBufferAttribute(positions, idx + 2);
 
-    const edge1 = new THREE.Vector3().subVectors(vB, vA);
-    const edge2 = new THREE.Vector3().subVectors(vC, vA);
+    edge1.subVectors(vB, vA);
+    edge2.subVectors(vC, vA);
     faceNormal.crossVectors(edge1, edge2).normalize();
 
     lines.push(`  facet normal ${fmt(faceNormal.x)} ${fmt(faceNormal.y)} ${fmt(faceNormal.z)}`);

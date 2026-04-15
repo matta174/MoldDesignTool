@@ -98,6 +98,10 @@ export function generateOnePieceMold(
 
   // Cleanup intermediate geometries
   boxGeo.dispose();
+  // Dispose all subtracted geometries except the model (returned to caller)
+  for (const sub of subtractions) {
+    if (sub !== model) sub.dispose();
+  }
 
   return {
     moldGeometry,

@@ -23,9 +23,13 @@ export function downloadFile(
   document.body.appendChild(link);
   link.click();
 
-  // Cleanup
-  setTimeout(() => {
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  }, 100);
+  // Cleanup after the browser has had time to initiate the download.
+  // requestAnimationFrame ensures we wait at least one frame, then a short
+  // timeout gives the browser time to start the download before we revoke.
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 1000);
+  });
 }

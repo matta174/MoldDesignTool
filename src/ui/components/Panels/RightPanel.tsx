@@ -166,10 +166,13 @@ export function RightPanel() {
   ]);
 
   const handleExportModel = useCallback(() => {
+    // Snapshot geometry at call time to avoid race if state changes mid-export
     const geo = getActiveGeometry();
     if (!geo) return;
+    const snapshot = geo.clone();
     const name = getActiveModelName();
-    const data = exportSTL(geo, { format: 'binary', unit: 'mm', modelName: `${name}_model` });
+    const data = exportSTL(snapshot, { format: 'binary', unit: 'mm', modelName: `${name}_model` });
+    snapshot.dispose();
     downloadFile(data, `${name}_model.stl`);
   }, [selectedTemplate, params, designMode, geoVersion, sculptVersion]);
 

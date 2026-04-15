@@ -57,16 +57,13 @@ export function generatePlanterGeometry(params: TemplateParams): THREE.BufferGeo
       const ly = lipBase + lipHeight * t;
       profile.push(new THREE.Vector2(lr, ly));
     }
-    // Lip inner curve back down
-    const lipTopR = topOuterR + lipRadius;
+    // Lip inner curve back down — always include all points for profile continuity
     for (let i = lipSteps - 1; i >= 0; i--) {
       const t = i / lipSteps;
       const angle = (t * Math.PI) / 2;
       const lr = topInnerR + (lipRadius * 0.4) * Math.sin(angle);
       const ly = height - lipHeight * (1 - t) * 0.3;
-      if (lr < lipTopR) {
-        profile.push(new THREE.Vector2(lr, ly));
-      }
+      profile.push(new THREE.Vector2(lr, ly));
     }
   }
 

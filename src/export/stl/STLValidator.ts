@@ -82,9 +82,11 @@ export function validateForExport(geometry: THREE.BufferGeometry): ValidationRes
   for (let i = 0; i < triangles; i += step) {
     let idxA: number, idxB: number, idxC: number;
     if (index) {
-      idxA = index.getX(i * 3);
-      idxB = index.getX(i * 3 + 1);
-      idxC = index.getX(i * 3 + 2);
+      // Direct array access for index buffer (stores integer indices, not vector components)
+      const arr = index.array;
+      idxA = arr[i * 3];
+      idxB = arr[i * 3 + 1];
+      idxC = arr[i * 3 + 2];
     } else {
       idxA = i * 3;
       idxB = i * 3 + 1;

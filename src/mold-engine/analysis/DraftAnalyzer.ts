@@ -76,6 +76,8 @@ export function analyzeDraftAngles(
 
   const normalVec = new THREE.Vector3();
   const demold = demoldDir.clone().normalize();
+  // Reusable color instance to avoid allocating per-face
+  const tempColor = new THREE.Color();
 
   let undercuts = 0;
   let belowMinimum = 0;
@@ -114,31 +116,30 @@ export function analyzeDraftAngles(
 
     if (draftAngle < minAngle) minAngle = draftAngle;
 
-    // Classify
-    let color: THREE.Color;
+    // Classify and assign color (reuse tempColor to avoid per-face allocation)
     if (draftAngle < UNDERCUT_THRESHOLD) {
       undercuts++;
-      color = COLOR_UNDERCUT;
+      tempColor.copy(COLOR_UNDERCUT);
     } else if (draftAngle < MIN_DRAFT_ANGLE) {
       belowMinimum++;
-      color = COLOR_MARGINAL;
+      tempColor.copy(COLOR_MARGINAL);
     } else if (draftAngle > 75) {
       // Nearly flat top/bottom — neutral
       acceptable++;
-      color = COLOR_NEUTRAL;
+      tempColor.copy(COLOR_NEUTRAL);
     } else {
       acceptable++;
       // Lerp from good toward neutral as angle increases
       const t = Math.min(1, (draftAngle - MIN_DRAFT_ANGLE) / 60);
-      color = COLOR_GOOD.clone().lerp(COLOR_NEUTRAL, t * 0.5);
+      tempColor.copy(COLOR_GOOD).lerp(COLOR_NEUTRAL, t * 0.5);
     }
 
     // Apply color to all 3 vertices of this face
     for (let v = 0; v < 3; v++) {
       const ci = (i + v) * 3;
-      colors[ci] = color.r;
-      colors[ci + 1] = color.g;
-      colors[ci + 2] = color.b;
+      colors[ci] = tempColor.r;
+      colors[ci + 1] = tempColor.g;
+      colors[ci + 2] = tempColor.b;
     }
   }
 
