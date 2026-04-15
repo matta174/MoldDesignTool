@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { getTemplateDefaults } from '../../designs/templates/registry';
 import { useMoldStore } from './moldStore';
 
-export type DesignMode = 'template' | 'geometric' | 'sculpt';
+export type DesignMode = 'template' | 'geometric' | 'sculpt' | 'import';
 export type TemplateType = 'planter' | 'vase' | 'coaster' | 'tile';
 export type SurfacePattern = 'none' | 'ribs' | 'facets' | 'flute';
 
@@ -27,7 +27,7 @@ function invalidateMold() {
 }
 
 export const useDesignStore = create<DesignState>((set) => ({
-  mode: 'template',
+  mode: 'import',
   selectedTemplate: 'planter',
   params: getTemplateDefaults('planter'),
 

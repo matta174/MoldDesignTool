@@ -5,6 +5,7 @@ import { useSculptStore } from '../../state/sculptStore';
 import './StatusBar.css';
 
 const MODE_LABELS = {
+  import: 'IMPORT',
   template: 'TEMPLATE',
   geometric: 'GEOMETRIC',
   sculpt: 'SCULPT',

@@ -9,6 +9,7 @@ import { MoldModel } from './MoldModel';
 import { DraftHeatmapModel } from './DraftHeatmapModel';
 import { GeometricModel } from './GeometricModel';
 import { SculptModel } from './SculptModel';
+import { ImportModel } from './ImportModel';
 import './Viewport.css';
 
 export function Viewport() {
@@ -18,6 +19,7 @@ export function Viewport() {
   const viewMode = useMoldStore((s) => s.viewMode);
   const isSculpting = useSculptStore((s) => s.isSculpting);
 
+  const isImportMode = designMode === 'import';
   const isTemplateMode = designMode === 'template';
   const isGeometricMode = designMode === 'geometric';
   const isSculptMode = designMode === 'sculpt';
@@ -49,6 +51,9 @@ export function Viewport() {
             infiniteGrid
           />
         )}
+
+        {/* Import mode model */}
+        {isImportMode && viewMode !== 'mold' && <ImportModel />}
 
         {/* Template mode models */}
         {isTemplateMode && viewMode !== 'mold' && !showDraftHeatmap && (

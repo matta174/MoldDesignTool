@@ -120,7 +120,7 @@ function applyGrab(
 function applySmooth(
   positions: THREE.BufferAttribute,
   i: number,
-  center: THREE.Vector3,
+  _center: THREE.Vector3,
   radius: number,
   _count: number,
   factor: number

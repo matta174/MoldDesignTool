@@ -106,7 +106,6 @@ export function validateWallThickness(
   }
 
   // Also check vertical: model top vs mold top (no top margin in 1-part)
-  const modelHeight = modelSize.y;
   const verticalClearance = moldBottomMargin; // bottom is the only closed side
   if (verticalClearance < MIN_PRINTABLE_WALL) {
     thinAreas++;

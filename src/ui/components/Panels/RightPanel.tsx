@@ -5,6 +5,7 @@ import { useDesignStore } from '../../state/designStore';
 import { useViewportStore } from '../../state/viewportStore';
 import { useGeometricStore } from '../../state/geometricStore';
 import { useSculptStore } from '../../state/sculptStore';
+import { useImportStore } from '../../state/importStore';
 import { exportSTL } from '../../../export/stl/STLExporter';
 import { getActiveGeometry, getActiveModelName } from '../../../designs/getActiveGeometry';
 import { validateWallThickness } from '../../../mold-engine/validation/WallThicknessValidator';
@@ -61,6 +62,8 @@ export function RightPanel() {
   const params = useDesignStore((s) => s.params);
   const geoVersion = useGeometricStore((s) => s.version);
   const sculptVersion = useSculptStore((s) => s.version);
+  const importedGeometry = useImportStore((s) => s.geometry);
+  const importFileName = useImportStore((s) => s.fileName);
 
   const is2Part = settings.moldType === '2part';
 
@@ -78,7 +81,7 @@ export function RightPanel() {
     } catch {
       return null;
     }
-  }, [selectedTemplate, params, designMode, debouncedGeoVersion, debouncedSculptVersion]);
+  }, [selectedTemplate, params, designMode, debouncedGeoVersion, debouncedSculptVersion, importedGeometry]);
 
   const handleGenerate = useCallback(() => {
     setGenerating(true);
@@ -161,7 +164,7 @@ export function RightPanel() {
         setGenerating(false);
       });
   }, [
-    selectedTemplate, params, designMode, geoVersion, sculptVersion, settings, shrinkage.scaleFactor, is2Part,
+    selectedTemplate, params, designMode, geoVersion, sculptVersion, importedGeometry, settings, shrinkage.scaleFactor, is2Part,
     setGenerating, setMoldGenerated, setMoldGeometry, setTwoPartGeometry, setViewMode, setAnalysis,
   ]);
 
@@ -174,7 +177,7 @@ export function RightPanel() {
     const data = exportSTL(snapshot, { format: 'binary', unit: 'mm', modelName: `${name}_model` });
     snapshot.dispose();
     downloadFile(data, `${name}_model.stl`);
-  }, [selectedTemplate, params, designMode, geoVersion, sculptVersion]);
+  }, [selectedTemplate, params, designMode, geoVersion, sculptVersion, importedGeometry]);
 
   const handleExportMold = useCallback(() => {
     if (is2Part) {
@@ -196,7 +199,7 @@ export function RightPanel() {
       const data = exportSTL(moldGeo, { format: 'binary', unit: 'mm', modelName: `${name}_mold` });
       downloadFile(data, `${name}_mold.stl`);
     }
-  }, [designMode, selectedTemplate, is2Part]);
+  }, [designMode, selectedTemplate, importFileName, is2Part]);
 
   const handleExportHalf = useCallback((half: 'top' | 'bottom') => {
     const state = useMoldStore.getState();
@@ -205,7 +208,7 @@ export function RightPanel() {
     const name = getActiveModelName();
     const data = exportSTL(geo, { format: 'binary', unit: 'mm', modelName: `${name}_mold_${half}` });
     downloadFile(data, `${name}_mold_${half}.stl`);
-  }, [designMode, selectedTemplate]);
+  }, [designMode, selectedTemplate, importFileName]);
 
   return (
     <div className="right-panel">
