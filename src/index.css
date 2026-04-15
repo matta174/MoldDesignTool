@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== DESIGN SYSTEM TOKENS ===== */
+:root {
+  --concrete-950: #0a0a0a;
+  --concrete-900: #141414;
+  --concrete-800: #1e1e1e;
+  --concrete-700: #2a2a2a;
+  --concrete-600: #3d3d3d;
+  --concrete-400: #6b6b6b;
+  --concrete-300: #8a8a8a;
+  --concrete-200: #b0b0b0;
+  --concrete-100: #d4d4d4;
+  --concrete-50: #ededed;
+
+  --form-500: #e85d26;
+  --form-400: #f07a4a;
+  --form-600: #c44d1e;
+  --form-100: #fde8de;
+
+  --danger: #dc2626;
+  --warning: #d97706;
+  --success: #16a34a;
+  --info: #2563eb;
+
+  --draft-bad: #dc2626;
+  --draft-marginal: #d97706;
+  --draft-good: #16a34a;
+  --draft-neutral: #6b6b6b;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+  --font-heading: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+}
+
+/* ===== BASE ===== */
+html, body, #root {
+  height: 100%;
+  background: var(--concrete-950);
+  color: var(--concrete-200);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--concrete-900); }
+::-webkit-scrollbar-thumb { background: var(--concrete-700); }
+::-webkit-scrollbar-thumb:hover { background: var(--concrete-600); }
+
+/* ===== FOCUS ===== */
+:focus-visible {
+  outline: 2px solid var(--form-500);
+  outline-offset: 2px;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--form-500);
+  color: var(--concrete-950);
+}

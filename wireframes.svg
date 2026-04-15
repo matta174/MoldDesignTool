@@ -1,0 +1,501 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1800" font-family="'JetBrains Mono', 'SF Mono', monospace">
+  <style>
+    .bg { fill: #0a0a0a; }
+    .panel { fill: #141414; stroke: #2a2a2a; stroke-width: 1; }
+    .card { fill: #1e1e1e; stroke: #2a2a2a; stroke-width: 1; }
+    .viewport { fill: #0a0a0a; stroke: #2a2a2a; stroke-width: 1; }
+    .accent { fill: #e85d26; }
+    .accent-text { fill: #e85d26; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
+    .heading { fill: #ededed; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; }
+    .subheading { fill: #d4d4d4; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; }
+    .label { fill: #6b6b6b; font-size: 10px; font-weight: 400; letter-spacing: 0.04em; }
+    .value { fill: #d4d4d4; font-size: 10px; }
+    .body { fill: #b0b0b0; font-size: 10px; }
+    .muted { fill: #3d3d3d; }
+    .border { stroke: #2a2a2a; stroke-width: 1; fill: none; }
+    .border-accent { stroke: #e85d26; stroke-width: 2; fill: none; }
+    .btn-primary { fill: #e85d26; }
+    .btn-secondary { fill: none; stroke: #3d3d3d; stroke-width: 1; }
+    .input { fill: #1e1e1e; stroke: #3d3d3d; stroke-width: 1; }
+    .slider-track { stroke: #2a2a2a; stroke-width: 2; }
+    .slider-fill { stroke: #e85d26; stroke-width: 2; }
+    .slider-thumb { fill: #d4d4d4; }
+    .grid-line { stroke: #1e1e1e; stroke-width: 0.5; }
+    .wireframe-title { fill: #e85d26; font-size: 16px; font-weight: 800; letter-spacing: 0.1em; font-family: 'Space Grotesk', sans-serif; }
+    .wireframe-subtitle { fill: #6b6b6b; font-size: 11px; letter-spacing: 0.06em; }
+    .section-label { fill: #e85d26; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; }
+    .dimension { fill: #3d3d3d; font-size: 8px; }
+    .tab-active { fill: #e85d26; }
+    .tab-inactive { fill: #6b6b6b; }
+    .badge-error { fill: none; stroke: #dc2626; stroke-width: 1; }
+    .badge-warning { fill: none; stroke: #d97706; stroke-width: 1; }
+    .badge-success { fill: none; stroke: #16a34a; stroke-width: 1; }
+    .error-text { fill: #dc2626; font-size: 9px; font-weight: 700; }
+    .warning-text { fill: #d97706; font-size: 9px; font-weight: 700; }
+    .success-text { fill: #16a34a; font-size: 9px; font-weight: 700; }
+  </style>
+
+  <!-- ==================== -->
+  <!-- WIREFRAME 1: MAIN LAYOUT — TEMPLATE MODE -->
+  <!-- ==================== -->
+  <rect class="bg" x="0" y="0" width="1400" height="850"/>
+
+  <!-- Title -->
+  <text class="wireframe-title" x="20" y="30">01 — MAIN LAYOUT: TEMPLATE MODE</text>
+  <text class="wireframe-subtitle" x="20" y="46">Default view. User has selected a planter template and is adjusting parameters.</text>
+
+  <!-- Top Toolbar — 48px -->
+  <rect class="panel" x="20" y="60" width="1360" height="48"/>
+  <line class="border" x1="20" y1="108" x2="1380" y2="108"/>
+
+  <!-- Logo / App Name -->
+  <text class="accent-text" x="36" y="89">◼ CONCRETE</text>
+
+  <!-- Toolbar buttons -->
+  <rect class="card" x="160" y="72" width="60" height="24" rx="0"/>
+  <text class="label" x="175" y="88">FILE</text>
+  <rect class="card" x="228" y="72" width="60" height="24" rx="0"/>
+  <text class="label" x="243" y="88">VIEW</text>
+  <rect class="card" x="296" y="72" width="60" height="24" rx="0"/>
+  <text class="label" x="311" y="88">HELP</text>
+
+  <!-- Toolbar right: undo/redo + export -->
+  <rect class="card" x="1180" y="72" width="28" height="24"/>
+  <text class="label" x="1188" y="88">↺</text>
+  <rect class="card" x="1214" y="72" width="28" height="24"/>
+  <text class="label" x="1222" y="88">↻</text>
+  <rect class="btn-primary" x="1260" y="72" width="100" height="24"/>
+  <text x="1279" y="88" fill="#0a0a0a" font-size="10" font-weight="700" letter-spacing="0.08em">EXPORT STL</text>
+
+  <!-- Left Panel — 280px -->
+  <rect class="panel" x="20" y="108" width="280" height="660"/>
+  <line class="border" x1="300" y1="108" x2="300" y2="768"/>
+
+  <!-- Mode Tabs -->
+  <rect x="20" y="108" width="280" height="36" fill="#141414"/>
+  <text class="tab-active" x="52" y="131" font-size="10" font-weight="700" letter-spacing="0.06em">TEMPLATE</text>
+  <line x1="36" y1="140" x2="105" y2="140" stroke="#e85d26" stroke-width="2"/>
+  <text class="tab-inactive" x="130" y="131" font-size="10" font-weight="600" letter-spacing="0.06em">GEOMETRIC</text>
+  <text class="tab-inactive" x="222" y="131" font-size="10" font-weight="600" letter-spacing="0.06em">SCULPT</text>
+  <line class="border" x1="20" y1="144" x2="300" y2="144"/>
+
+  <!-- Template Picker Section -->
+  <text class="section-label" x="36" y="164">TEMPLATE</text>
+
+  <!-- Template grid (2x2 thumbnails) -->
+  <rect class="card" x="36" y="174" width="118" height="72"/>
+  <rect class="border-accent" x="36" y="174" width="118" height="72"/>
+  <text class="value" x="66" y="214">PLANTER</text>
+
+  <rect class="card" x="162" y="174" width="118" height="72"/>
+  <text class="value" x="200" y="214">VASE</text>
+
+  <rect class="card" x="36" y="254" width="118" height="72"/>
+  <text class="value" x="62" y="294">COASTER</text>
+
+  <rect class="card" x="162" y="254" width="118" height="72"/>
+  <text class="value" x="198" y="294">TILE</text>
+
+  <!-- Divider -->
+  <line class="border" x1="36" y1="340" x2="284" y2="340"/>
+
+  <!-- Parameters Section -->
+  <text class="section-label" x="36" y="360">PARAMETERS</text>
+
+  <!-- Param: Height -->
+  <text class="label" x="36" y="382">HEIGHT</text>
+  <text class="value" x="244" y="382">120 MM</text>
+  <line class="slider-track" x1="36" y1="394" x2="284" y2="394"/>
+  <line class="slider-fill" x1="36" y1="394" x2="180" y2="394"/>
+  <rect class="slider-thumb" x="176" y="389" width="8" height="10"/>
+
+  <!-- Param: Diameter -->
+  <text class="label" x="36" y="418">OUTER DIAMETER</text>
+  <text class="value" x="244" y="418">100 MM</text>
+  <line class="slider-track" x1="36" y1="430" x2="284" y2="430"/>
+  <line class="slider-fill" x1="36" y1="430" x2="160" y2="430"/>
+  <rect class="slider-thumb" x="156" y="425" width="8" height="10"/>
+
+  <!-- Param: Wall Thickness -->
+  <text class="label" x="36" y="454">WALL THICKNESS</text>
+  <text class="value" x="252" y="454">8 MM</text>
+  <line class="slider-track" x1="36" y1="466" x2="284" y2="466"/>
+  <line class="slider-fill" x1="36" y1="466" x2="100" y2="466"/>
+  <rect class="slider-thumb" x="96" y="461" width="8" height="10"/>
+
+  <!-- Param: Draft Angle -->
+  <text class="label" x="36" y="490">DRAFT ANGLE</text>
+  <text class="value" x="256" y="490">3.0°</text>
+  <line class="slider-track" x1="36" y1="502" x2="284" y2="502"/>
+  <line class="slider-fill" x1="36" y1="502" x2="120" y2="502"/>
+  <rect class="slider-thumb" x="116" y="497" width="8" height="10"/>
+
+  <!-- Param: Bottom Thickness -->
+  <text class="label" x="36" y="526">BOTTOM THICKNESS</text>
+  <text class="value" x="248" y="526">10 MM</text>
+  <line class="slider-track" x1="36" y1="538" x2="284" y2="538"/>
+  <line class="slider-fill" x1="36" y1="538" x2="130" y2="538"/>
+  <rect class="slider-thumb" x="126" y="533" width="8" height="10"/>
+
+  <!-- Param: Drainage Hole -->
+  <text class="label" x="36" y="562">DRAINAGE HOLE</text>
+  <!-- Toggle -->
+  <rect x="244" y="552" width="36" height="16" fill="#1e1e1e" stroke="#3d3d3d" stroke-width="1"/>
+  <rect x="264" y="554" width="14" height="12" fill="#e85d26"/>
+
+  <!-- Param: Segments -->
+  <text class="label" x="36" y="594">SEGMENTS</text>
+  <text class="value" x="260" y="594">64</text>
+  <line class="slider-track" x1="36" y1="606" x2="284" y2="606"/>
+  <line class="slider-fill" x1="36" y1="606" x2="200" y2="606"/>
+  <rect class="slider-thumb" x="196" y="601" width="8" height="10"/>
+
+  <!-- Divider -->
+  <line class="border" x1="36" y1="624" x2="284" y2="624"/>
+
+  <!-- Pattern Section -->
+  <text class="section-label" x="36" y="644">SURFACE PATTERN</text>
+  <rect class="card" x="36" y="654" width="56" height="40"/>
+  <text class="label" x="50" y="678">NONE</text>
+  <rect class="card" x="100" y="654" width="56" height="40"/>
+  <text class="label" x="108" y="678">RIBS</text>
+  <rect class="card" x="164" y="654" width="56" height="40"/>
+  <text class="label" x="170" y="678">FACETS</text>
+  <rect class="card" x="228" y="654" width="56" height="40"/>
+  <text class="label" x="234" y="678">FLUTE</text>
+
+  <!-- Viewport -->
+  <rect class="viewport" x="300" y="108" width="760" height="660"/>
+
+  <!-- Grid in viewport -->
+  <line class="grid-line" x1="300" y1="438" x2="1060" y2="438"/>
+  <line class="grid-line" x1="680" y1="108" x2="680" y2="768"/>
+
+  <!-- Placeholder 3D object (planter silhouette) -->
+  <polygon points="630,280 730,280 750,520 610,520" fill="none" stroke="#3d3d3d" stroke-width="1.5"/>
+  <polygon points="640,290 720,290 740,510 620,510" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+  <line stroke="#2a2a2a" stroke-width="1" x1="620" y1="510" x2="740" y2="510"/>
+
+  <!-- Dimension annotations -->
+  <line stroke="#3d3d3d" stroke-width="0.5" stroke-dasharray="3,3" x1="760" y1="280" x2="780" y2="280"/>
+  <line stroke="#3d3d3d" stroke-width="0.5" stroke-dasharray="3,3" x1="760" y1="520" x2="780" y2="520"/>
+  <line stroke="#3d3d3d" stroke-width="0.5" x1="775" y1="280" x2="775" y2="520"/>
+  <text class="dimension" x="782" y="404">120mm</text>
+
+  <!-- Viewport gizmo (top-right corner) -->
+  <g transform="translate(1010, 148)">
+    <line x1="0" y1="0" x2="20" y2="10" stroke="#dc2626" stroke-width="1.5"/>
+    <text fill="#dc2626" font-size="8" x="22" y="14">X</text>
+    <line x1="0" y1="0" x2="0" y2="-25" stroke="#16a34a" stroke-width="1.5"/>
+    <text fill="#16a34a" font-size="8" x="3" y="-18">Y</text>
+    <line x1="0" y1="0" x2="-15" y2="12" stroke="#2563eb" stroke-width="1.5"/>
+    <text fill="#2563eb" font-size="8" x="-26" y="16">Z</text>
+  </g>
+
+  <!-- Right Panel — 320px -->
+  <rect class="panel" x="1060" y="108" width="320" height="660"/>
+  <line class="border" x1="1060" y1="108" x2="1060" y2="768"/>
+
+  <!-- Mold Settings Section -->
+  <text class="section-label" x="1076" y="132">MOLD GENERATION</text>
+
+  <!-- Mold Type -->
+  <text class="label" x="1076" y="154">MOLD TYPE</text>
+  <rect class="card" x="1076" y="162" width="140" height="28"/>
+  <rect class="btn-primary" x="1076" y="162" width="140" height="28"/>
+  <text x="1114" y="180" fill="#0a0a0a" font-size="9" font-weight="700">1-PART</text>
+  <rect class="card" x="1224" y="162" width="140" height="28"/>
+  <text class="label" x="1266" y="180">2-PART</text>
+
+  <!-- Mold Params -->
+  <text class="label" x="1076" y="212">WALL MARGIN</text>
+  <rect class="input" x="1280" y="200" width="80" height="22"/>
+  <text class="value" x="1300" y="215">10 MM</text>
+
+  <text class="label" x="1076" y="244">BOTTOM MARGIN</text>
+  <rect class="input" x="1280" y="232" width="80" height="22"/>
+  <text class="value" x="1300" y="247">10 MM</text>
+
+  <text class="label" x="1076" y="276">POUR HOLE ∅</text>
+  <rect class="input" x="1280" y="264" width="80" height="22"/>
+  <text class="value" x="1300" y="279">25 MM</text>
+
+  <!-- Generate Button -->
+  <rect class="btn-primary" x="1076" y="300" width="288" height="32"/>
+  <text x="1163" y="320" fill="#0a0a0a" font-size="11" font-weight="700" letter-spacing="0.08em">GENERATE MOLD</text>
+
+  <!-- Divider -->
+  <line class="border" x1="1076" y1="348" x2="1364" y2="348"/>
+
+  <!-- Analysis Section -->
+  <text class="section-label" x="1076" y="368">ANALYSIS</text>
+
+  <!-- Draft Angle Result -->
+  <rect x="1076" y="378" width="288" height="44" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+  <text class="subheading" x="1092" y="396">DRAFT ANGLE</text>
+  <text class="success-text" x="1092" y="412">ALL FACES > 3° ✓</text>
+  <rect class="badge-success" x="1320" y="384" width="32" height="18"/>
+  <text class="success-text" x="1327" y="397">OK</text>
+
+  <!-- Wall Thickness Result -->
+  <rect x="1076" y="430" width="288" height="44" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+  <text class="subheading" x="1092" y="448">WALL THICKNESS</text>
+  <text class="success-text" x="1092" y="464">MIN: 8MM (≥ 5MM) ✓</text>
+  <rect class="badge-success" x="1320" y="436" width="32" height="18"/>
+  <text class="success-text" x="1327" y="449">OK</text>
+
+  <!-- Printability Result -->
+  <rect x="1076" y="482" width="288" height="44" fill="#1e1e1e" stroke="#2a2a2a" stroke-width="1"/>
+  <text class="subheading" x="1092" y="500">PRINTABILITY</text>
+  <text class="warning-text" x="1092" y="516">2 OVERHANGS > 45°</text>
+  <rect class="badge-warning" x="1310" y="488" width="46" height="18"/>
+  <text class="warning-text" x="1317" y="501">WARN</text>
+
+  <!-- Divider -->
+  <line class="border" x1="1076" y1="544" x2="1364" y2="544"/>
+
+  <!-- Shrinkage Section -->
+  <text class="section-label" x="1076" y="564">SHRINKAGE COMPENSATION</text>
+
+  <text class="label" x="1076" y="584">MATERIAL</text>
+  <rect class="input" x="1076" y="592" width="288" height="24"/>
+  <text class="value" x="1092" y="608">PORTLAND CEMENT (1.5%)</text>
+
+  <text class="label" x="1076" y="630">SCALE FACTOR</text>
+  <text class="value" x="1304" y="630">1.015×</text>
+
+  <!-- Divider -->
+  <line class="border" x1="1076" y1="648" x2="1364" y2="648"/>
+
+  <!-- Export Section -->
+  <text class="section-label" x="1076" y="668">EXPORT</text>
+
+  <rect class="btn-secondary" x="1076" y="680" width="140" height="28"/>
+  <text class="label" x="1109" y="698">MODEL STL</text>
+
+  <rect class="btn-secondary" x="1224" y="680" width="140" height="28"/>
+  <text class="label" x="1261" y="698">MOLD STL</text>
+
+  <rect class="btn-primary" x="1076" y="718" width="288" height="32"/>
+  <text x="1155" y="738" fill="#0a0a0a" font-size="11" font-weight="700" letter-spacing="0.08em">EXPORT BOTH</text>
+
+  <!-- Status Bar -->
+  <rect class="panel" x="20" y="768" width="1360" height="32"/>
+  <line class="border" x1="20" y1="768" x2="1380" y2="768"/>
+  <text class="label" x="36" y="788">VERTICES: 4,096</text>
+  <text class="label" x="160" y="788">FACES: 8,192</text>
+  <text class="label" x="270" y="788">VOLUME: 523.4 CM³</text>
+  <text class="label" x="1220" y="788">UNITS: MM</text>
+  <text class="label" x="1300" y="788">GRID: ON</text>
+
+  <!-- ==================== -->
+  <!-- WIREFRAME 2: GEOMETRIC MODE -->
+  <!-- ==================== -->
+  <rect class="bg" x="0" y="870" width="1400" height="450"/>
+
+  <text class="wireframe-title" x="20" y="900">02 — LEFT PANEL: GEOMETRIC MODE</text>
+  <text class="wireframe-subtitle" x="20" y="916">User is building shapes with CSG boolean operations.</text>
+
+  <!-- Left Panel Detail -->
+  <rect class="panel" x="20" y="930" width="340" height="370"/>
+
+  <!-- Mode Tabs -->
+  <rect x="20" y="930" width="340" height="36" fill="#141414"/>
+  <text class="tab-inactive" x="52" y="953" font-size="10" font-weight="600" letter-spacing="0.06em">TEMPLATE</text>
+  <text class="tab-active" x="146" y="953" font-size="10" font-weight="700" letter-spacing="0.06em">GEOMETRIC</text>
+  <line x1="130" y1="962" x2="218" y2="962" stroke="#e85d26" stroke-width="2"/>
+  <text class="tab-inactive" x="238" y="953" font-size="10" font-weight="600" letter-spacing="0.06em">SCULPT</text>
+  <line class="border" x1="20" y1="966" x2="360" y2="966"/>
+
+  <!-- Primitives Section -->
+  <text class="section-label" x="36" y="988">ADD PRIMITIVE</text>
+
+  <rect class="card" x="36" y="998" width="68" height="52"/>
+  <rect x="56" y="1008" width="28" height="28" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+  <text class="label" x="54" y="1044">CUBE</text>
+
+  <rect class="card" x="112" y="998" width="68" height="52"/>
+  <circle cx="146" cy="1022" r="14" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+  <text class="label" x="124" y="1044">SPHERE</text>
+
+  <rect class="card" x="188" y="998" width="68" height="52"/>
+  <ellipse cx="222" cy="1022" rx="14" ry="8" fill="none" stroke="#6b6b6b" stroke-width="1" transform="rotate(-20,222,1022)"/>
+  <text class="label" x="196" y="1044">CYLINDER</text>
+
+  <rect class="card" x="264" y="998" width="68" height="52"/>
+  <circle cx="298" cy="1022" r="14" fill="none" stroke="#6b6b6b" stroke-width="1"/>
+  <circle cx="298" cy="1022" r="7" fill="#141414" stroke="#6b6b6b" stroke-width="1"/>
+  <text class="label" x="280" y="1044">TORUS</text>
+
+  <!-- Divider -->
+  <line class="border" x1="36" y1="1062" x2="344" y2="1062"/>
+
+  <!-- Boolean Operations -->
+  <text class="section-label" x="36" y="1082">BOOLEAN OPERATION</text>
+
+  <rect class="btn-primary" x="36" y="1092" width="96" height="28"/>
+  <text x="56" y="1110" fill="#0a0a0a" font-size="9" font-weight="700">UNION ∪</text>
+
+  <rect class="btn-secondary" x="140" y="1092" width="96" height="28"/>
+  <text class="label" x="148" y="1110">SUBTRACT −</text>
+
+  <rect class="btn-secondary" x="244" y="1092" width="96" height="28"/>
+  <text class="label" x="248" y="1110">INTERSECT ∩</text>
+
+  <!-- Divider -->
+  <line class="border" x1="36" y1="1134" x2="344" y2="1134"/>
+
+  <!-- Scene Hierarchy -->
+  <text class="section-label" x="36" y="1154">SCENE HIERARCHY</text>
+
+  <rect class="card" x="36" y="1164" width="308" height="24"/>
+  <rect x="36" y="1164" width="308" height="24" fill="#1e1e1e" stroke="#e85d26" stroke-width="1"/>
+  <text class="value" x="60" y="1180">▾ Union_001</text>
+
+  <rect class="card" x="52" y="1192" width="292" height="22"/>
+  <text class="label" x="72" y="1206">├ Cube_001 (80×80×120)</text>
+
+  <rect class="card" x="52" y="1218" width="292" height="22"/>
+  <text class="label" x="72" y="1232">├ Cylinder_001 (∅60×100)</text>
+
+  <rect class="card" x="52" y="1244" width="292" height="22"/>
+  <text class="label" x="72" y="1258">└ Sphere_001 (r=30) [SUBTRACT]</text>
+
+  <!-- Transform Section (right side of this wireframe) -->
+  <rect class="panel" x="420" y="930" width="340" height="370"/>
+
+  <text class="section-label" x="436" y="958">TRANSFORM — CUBE_001</text>
+
+  <!-- Position -->
+  <text class="label" x="436" y="984">POSITION</text>
+  <rect class="input" x="436" y="992" width="96" height="22"/>
+  <text class="value" x="448" y="1007" fill="#dc2626">X 0.0</text>
+  <rect class="input" x="540" y="992" width="96" height="22"/>
+  <text class="value" x="552" y="1007" fill="#16a34a">Y 0.0</text>
+  <rect class="input" x="644" y="992" width="96" height="22"/>
+  <text class="value" x="656" y="1007" fill="#2563eb">Z 60.0</text>
+
+  <!-- Rotation -->
+  <text class="label" x="436" y="1034">ROTATION</text>
+  <rect class="input" x="436" y="1042" width="96" height="22"/>
+  <text class="value" x="448" y="1057" fill="#dc2626">X 0°</text>
+  <rect class="input" x="540" y="1042" width="96" height="22"/>
+  <text class="value" x="552" y="1057" fill="#16a34a">Y 0°</text>
+  <rect class="input" x="644" y="1042" width="96" height="22"/>
+  <text class="value" x="656" y="1057" fill="#2563eb">Z 0°</text>
+
+  <!-- Scale -->
+  <text class="label" x="436" y="1084">SCALE</text>
+  <rect class="input" x="436" y="1092" width="96" height="22"/>
+  <text class="value" x="448" y="1107" fill="#dc2626">X 1.0</text>
+  <rect class="input" x="540" y="1092" width="96" height="22"/>
+  <text class="value" x="552" y="1107" fill="#16a34a">Y 1.0</text>
+  <rect class="input" x="644" y="1092" width="96" height="22"/>
+  <text class="value" x="656" y="1107" fill="#2563eb">Z 1.0</text>
+
+  <!-- Dimensions -->
+  <line class="border" x1="436" y1="1128" x2="744" y2="1128"/>
+  <text class="section-label" x="436" y="1148">DIMENSIONS</text>
+  <text class="label" x="436" y="1170">WIDTH</text>
+  <rect class="input" x="560" y="1158" width="80" height="22"/>
+  <text class="value" x="580" y="1173">80 MM</text>
+
+  <text class="label" x="436" y="1200">DEPTH</text>
+  <rect class="input" x="560" y="1188" width="80" height="22"/>
+  <text class="value" x="580" y="1203">80 MM</text>
+
+  <text class="label" x="436" y="1230">HEIGHT</text>
+  <rect class="input" x="560" y="1218" width="80" height="22"/>
+  <text class="value" x="576" y="1233">120 MM</text>
+
+  <!-- ==================== -->
+  <!-- WIREFRAME 3: DRAFT ANGLE ANALYSIS VIEW -->
+  <!-- ==================== -->
+  <rect class="bg" x="0" y="1340" width="1400" height="450"/>
+
+  <text class="wireframe-title" x="20" y="1370">03 — DRAFT ANGLE ANALYSIS VIEW</text>
+  <text class="wireframe-subtitle" x="20" y="1386">Heatmap overlay active. Right panel shows per-face analysis with problem areas flagged.</text>
+
+  <!-- Viewport with heatmap object -->
+  <rect class="viewport" x="20" y="1400" width="700" height="370"/>
+
+  <!-- Simplified heatmap planter -->
+  <polygon points="310,1480 410,1480 430,1680 290,1680" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <!-- Problem area (side) -->
+  <line x1="310" y1="1480" x2="290" y2="1680" stroke="#dc2626" stroke-width="3"/>
+  <line x1="410" y1="1480" x2="430" y2="1680" stroke="#dc2626" stroke-width="3"/>
+  <!-- Good areas -->
+  <line x1="330" y1="1480" x2="312" y2="1680" stroke="#16a34a" stroke-width="1"/>
+  <line x1="350" y1="1480" x2="340" y2="1680" stroke="#16a34a" stroke-width="1"/>
+  <line x1="370" y1="1480" x2="370" y2="1680" stroke="#d97706" stroke-width="1"/>
+  <line x1="390" y1="1480" x2="400" y2="1680" stroke="#16a34a" stroke-width="1"/>
+
+  <!-- Legend -->
+  <rect x="40" y="1720" width="16" height="10" fill="#dc2626"/>
+  <text class="label" x="62" y="1729">&lt; 1° (UNMOLDABLE)</text>
+  <rect x="180" y="1720" width="16" height="10" fill="#d97706"/>
+  <text class="label" x="202" y="1729">1°–3° (RISKY)</text>
+  <rect x="300" y="1720" width="16" height="10" fill="#16a34a"/>
+  <text class="label" x="322" y="1729">&gt; 3° (GOOD)</text>
+  <rect x="420" y="1720" width="16" height="10" fill="#6b6b6b"/>
+  <text class="label" x="442" y="1729">PARALLEL</text>
+
+  <!-- Pull direction indicator -->
+  <line x1="600" y1="1680" x2="600" y2="1480" stroke="#e85d26" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text class="accent-text" x="612" y="1580">PULL DIR</text>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="0" refY="2" orient="auto">
+      <polygon points="0 0, 6 2, 0 4" fill="#e85d26"/>
+    </marker>
+  </defs>
+
+  <!-- Analysis Right Panel -->
+  <rect class="panel" x="740" y="1400" width="640" height="370"/>
+
+  <text class="section-label" x="756" y="1428">DRAFT ANALYSIS RESULTS</text>
+
+  <!-- Summary Stats -->
+  <rect class="card" x="756" y="1438" width="200" height="60"/>
+  <text class="label" x="772" y="1456">TOTAL FACES</text>
+  <text class="heading" x="772" y="1484">8,192</text>
+
+  <rect class="card" x="964" y="1438" width="200" height="60"/>
+  <text class="label" x="980" y="1456">PROBLEM FACES</text>
+  <text x="980" y="1484" fill="#dc2626" font-size="13" font-weight="700">247 (3.0%)</text>
+
+  <rect class="card" x="1172" y="1438" width="192" height="60"/>
+  <text class="label" x="1188" y="1456">MIN ANGLE</text>
+  <text x="1188" y="1484" fill="#d97706" font-size="13" font-weight="700">0.8°</text>
+
+  <!-- Divider -->
+  <line class="border" x1="756" y1="1512" x2="1364" y2="1512"/>
+
+  <!-- Problem breakdown -->
+  <text class="section-label" x="756" y="1532">PROBLEM AREAS</text>
+
+  <rect x="756" y="1542" width="608" height="28" fill="#1e1e1e" stroke="#dc2626" stroke-width="1"/>
+  <text class="error-text" x="772" y="1560">ZONE A — LEFT WALL</text>
+  <text class="value" x="1080" y="1560">142 FACES</text>
+  <text class="error-text" x="1240" y="1560">AVG: 0.4°</text>
+
+  <rect x="756" y="1578" width="608" height="28" fill="#1e1e1e" stroke="#dc2626" stroke-width="1"/>
+  <text class="error-text" x="772" y="1596">ZONE B — RIGHT WALL</text>
+  <text class="value" x="1080" y="1596">105 FACES</text>
+  <text class="error-text" x="1240" y="1596">AVG: 0.6°</text>
+
+  <!-- Divider -->
+  <line class="border" x1="756" y1="1622" x2="1364" y2="1622"/>
+
+  <!-- Auto-fix section -->
+  <text class="section-label" x="756" y="1642">AUTO CORRECTION</text>
+
+  <text class="body" x="756" y="1662">Apply minimum 3° draft to all flagged faces.</text>
+  <text class="body" x="756" y="1678">This will slightly taper the outer walls.</text>
+
+  <rect class="btn-primary" x="756" y="1694" width="200" height="32"/>
+  <text x="802" y="1714" fill="#0a0a0a" font-size="11" font-weight="700" letter-spacing="0.08em">AUTO-FIX DRAFT</text>
+
+  <rect class="btn-secondary" x="964" y="1694" width="200" height="32"/>
+  <text class="label" x="1018" y="1714">PREVIEW FIX</text>
+</svg>

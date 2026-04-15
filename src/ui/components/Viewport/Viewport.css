@@ -1,0 +1,27 @@
+.viewport {
+  flex: 1;
+  background: var(--concrete-950);
+  position: relative;
+  overflow: hidden;
+}
+
+.viewport canvas {
+  display: block;
+}
+
+.viewport-info {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  display: flex;
+  gap: var(--sp-4);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.viewport-info span {
+  font-size: 9px;
+  color: var(--concrete-600);
+  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+}

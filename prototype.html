@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>CONCRETE — Brutalist Design Tool</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&display=swap');
+
+  /* ===== RESET ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ===== CSS VARIABLES — DESIGN SYSTEM ===== */
+  :root {
+    /* Concrete grays */
+    --concrete-950: #0a0a0a;
+    --concrete-900: #141414;
+    --concrete-800: #1e1e1e;
+    --concrete-700: #2a2a2a;
+    --concrete-600: #3d3d3d;
+    --concrete-400: #6b6b6b;
+    --concrete-300: #8a8a8a;
+    --concrete-200: #b0b0b0;
+    --concrete-100: #d4d4d4;
+    --concrete-50: #ededed;
+
+    /* Formwork orange */
+    --form-500: #e85d26;
+    --form-400: #f07a4a;
+    --form-600: #c44d1e;
+    --form-100: #fde8de;
+
+    /* Semantic */
+    --danger: #dc2626;
+    --warning: #d97706;
+    --success: #16a34a;
+    --info: #2563eb;
+
+    /* Spacing */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-6: 24px;
+    --sp-8: 32px;
+
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', monospace;
+    --font-heading: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  }
+
+  /* ===== BASE ===== */
+  html, body {
+    height: 100%;
+    background: var(--concrete-950);
+    color: var(--concrete-200);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* ===== LAYOUT ===== */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    min-width: 1280px;
+  }
+
+  .main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ===== TOP TOOLBAR ===== */
+  .toolbar {
+    height: 48px;
+    background: var(--concrete-900);
+    border-bottom: 1px solid var(--concrete-700);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sp-4);
+    gap: var(--sp-2);
+    flex-shrink: 0;
+  }
+
+  .toolbar-logo {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--form-500);
+    letter-spacing: 0.1em;
+    margin-right: var(--sp-6);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .toolbar-logo .block {
+    width: 16px;
+    height: 16px;
+    background: var(--form-500);
+  }
+
+  .toolbar-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--concrete-400);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    cursor: pointer;
+  }
+
+  .toolbar-btn:hover {
+    color: var(--concrete-100);
+    border-color: var(--concrete-600);
+  }
+
+  .toolbar-spacer { flex: 1; }
+
+  .toolbar-icon-btn {
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--concrete-400);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .toolbar-icon-btn:hover {
+    background: var(--concrete-800);
+    color: var(--concrete-100);
+  }
+
+  .btn-primary {
+    background: var(--form-500);
+    color: var(--concrete-950);
+    border: none;
+    padding: 6px 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { background: var(--form-400); }
+  .btn-primary:active { background: var(--form-600); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--concrete-100);
+    border: 1px solid var(--concrete-600);
+    padding: 6px 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { border-color: var(--concrete-400); }
+
+  .btn-full { width: 100%; }
+
+  /* ===== LEFT PANEL ===== */
+  .left-panel {
+    width: 280px;
+    min-width: 280px;
+    background: var(--concrete-900);
+    border-right: 1px solid var(--concrete-700);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  /* ===== MODE TABS ===== */
+  .mode-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--concrete-700);
+    flex-shrink: 0;
+  }
+
+  .mode-tab {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--concrete-400);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: var(--font-mono);
+    transition: color 50ms;
+  }
+
+  .mode-tab:hover { color: var(--concrete-200); }
+  .mode-tab.active {
+    color: var(--form-500);
+    border-bottom-color: var(--form-500);
+  }
+
+  /* ===== PANEL SECTIONS ===== */
+  .panel-section {
+    padding: var(--sp-4);
+    border-bottom: 1px solid var(--concrete-700);
+  }
+
+  .section-header {
+    font-family: var(--font-heading);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--form-500);
+    margin-bottom: var(--sp-3);
+  }
+
+  /* ===== TEMPLATE GRID ===== */
+  .template-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2);
+  }
+
+  .template-card {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-700);
+    padding: var(--sp-3);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .template-card:hover { border-color: var(--concrete-400); }
+  .template-card.active { border-color: var(--form-500); }
+
+  .template-card .icon {
+    font-size: 28px;
+    margin-bottom: var(--sp-1);
+    color: var(--concrete-400);
+    display: block;
+  }
+
+  .template-card.active .icon { color: var(--form-500); }
+
+  .template-card .name {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--concrete-300);
+  }
+
+  .template-card.active .name { color: var(--concrete-100); }
+
+  /* ===== PARAMETER ROWS ===== */
+  .param-row {
+    margin-bottom: var(--sp-3);
+  }
+
+  .param-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-1);
+  }
+
+  .param-label {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--concrete-400);
+  }
+
+  .param-value {
+    font-size: 10px;
+    color: var(--concrete-100);
+    font-family: var(--font-mono);
+  }
+
+  /* Slider */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--concrete-700);
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 14px;
+    background: var(--concrete-100);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 10px;
+    height: 14px;
+    background: var(--concrete-100);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+  }
+
+  input[type="range"]:focus::-webkit-slider-thumb {
+    background: var(--form-500);
+  }
+
+  /* Toggle */
+  .toggle {
+    width: 36px;
+    height: 18px;
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-600);
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+  }
+
+  .toggle.on { border-color: var(--form-500); }
+
+  .toggle .knob {
+    width: 14px;
+    height: 14px;
+    background: var(--concrete-400);
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: left 0ms;
+  }
+
+  .toggle.on .knob {
+    left: 19px;
+    background: var(--form-500);
+  }
+
+  /* Number input */
+  .input-number {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-600);
+    color: var(--concrete-100);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 4px 8px;
+    width: 80px;
+    text-align: right;
+    outline: none;
+  }
+
+  .input-number:focus { border-color: var(--form-500); }
+
+  /* ===== PATTERN GRID ===== */
+  .pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-1);
+  }
+
+  .pattern-card {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-700);
+    padding: var(--sp-2) var(--sp-1);
+    text-align: center;
+    cursor: pointer;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--concrete-400);
+  }
+
+  .pattern-card:hover { border-color: var(--concrete-400); }
+  .pattern-card.active { border-color: var(--form-500); color: var(--form-500); }
+
+  /* ===== VIEWPORT ===== */
+  .viewport {
+    flex: 1;
+    background: var(--concrete-950);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .viewport-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--concrete-800) 1px, transparent 1px),
+      linear-gradient(90deg, var(--concrete-800) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.3;
+  }
+
+  .viewport-gizmo {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .viewport-placeholder {
+    position: relative;
+    z-index: 1;
+  }
+
+  .viewport-placeholder svg {
+    filter: drop-shadow(0 0 40px rgba(232, 93, 38, 0.08));
+  }
+
+  .viewport-info {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    gap: var(--sp-4);
+    z-index: 1;
+  }
+
+  .viewport-info span {
+    font-size: 9px;
+    color: var(--concrete-600);
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== RIGHT PANEL ===== */
+  .right-panel {
+    width: 320px;
+    min-width: 320px;
+    background: var(--concrete-900);
+    border-left: 1px solid var(--concrete-700);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  /* Mold type toggle */
+  .mold-type-toggle {
+    display: flex;
+    gap: 0;
+  }
+
+  .mold-type-btn {
+    flex: 1;
+    padding: 6px 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid var(--concrete-600);
+    background: var(--concrete-800);
+    color: var(--concrete-400);
+  }
+
+  .mold-type-btn.active {
+    background: var(--form-500);
+    color: var(--concrete-950);
+    border-color: var(--form-500);
+  }
+
+  .mold-type-btn:first-child { border-right: none; }
+
+  /* Mold param row */
+  .mold-param {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-2);
+  }
+
+  /* Analysis cards */
+  .analysis-card {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-700);
+    padding: var(--sp-2) var(--sp-3);
+    margin-bottom: var(--sp-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .analysis-card .label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--concrete-100);
+  }
+
+  .analysis-card .detail {
+    font-size: 9px;
+    margin-top: 2px;
+  }
+
+  .badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid;
+  }
+
+  .badge-ok { color: var(--success); border-color: var(--success); }
+  .badge-warn { color: var(--warning); border-color: var(--warning); }
+  .badge-error { color: var(--danger); border-color: var(--danger); }
+
+  .detail-ok { color: var(--success); }
+  .detail-warn { color: var(--warning); }
+  .detail-error { color: var(--danger); }
+
+  /* Shrinkage */
+  .select-input {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-600);
+    color: var(--concrete-100);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 8px;
+    width: 100%;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .select-input:focus { border-color: var(--form-500); }
+
+  /* Export buttons */
+  .export-row {
+    display: flex;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
+  }
+
+  .export-row .btn-secondary { flex: 1; text-align: center; }
+
+  /* ===== STATUS BAR ===== */
+  .status-bar {
+    height: 32px;
+    background: var(--concrete-900);
+    border-top: 1px solid var(--concrete-700);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sp-4);
+    gap: var(--sp-6);
+    flex-shrink: 0;
+  }
+
+  .status-item {
+    font-size: 10px;
+    color: var(--concrete-400);
+    letter-spacing: 0.04em;
+  }
+
+  .status-spacer { flex: 1; }
+
+  /* ===== PRIMITIVES GRID (Geometric Mode) ===== */
+  .primitives-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-2);
+  }
+
+  .primitive-card {
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-700);
+    padding: var(--sp-2);
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .primitive-card:hover { border-color: var(--concrete-400); }
+
+  .primitive-card .shape {
+    font-size: 22px;
+    color: var(--concrete-400);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .primitive-card .pname {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--concrete-400);
+  }
+
+  /* Boolean ops */
+  .bool-ops {
+    display: flex;
+    gap: var(--sp-1);
+  }
+
+  .bool-ops button {
+    flex: 1;
+    padding: 6px 0;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .bool-ops .active-bool {
+    background: var(--form-500);
+    color: var(--concrete-950);
+    border: none;
+  }
+
+  .bool-ops button:not(.active-bool) {
+    background: transparent;
+    color: var(--concrete-400);
+    border: 1px solid var(--concrete-600);
+  }
+
+  /* Scene tree */
+  .tree-item {
+    padding: 4px 8px;
+    font-size: 10px;
+    color: var(--concrete-300);
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .tree-item:hover { background: var(--concrete-800); }
+  .tree-item.selected {
+    border-color: var(--form-500);
+    background: var(--concrete-800);
+    color: var(--concrete-100);
+  }
+
+  .tree-child { padding-left: 24px; }
+
+  /* XYZ inputs */
+  .xyz-row {
+    display: flex;
+    gap: var(--sp-1);
+    margin-bottom: var(--sp-2);
+  }
+
+  .xyz-input {
+    flex: 1;
+    background: var(--concrete-800);
+    border: 1px solid var(--concrete-600);
+    color: var(--concrete-100);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 6px;
+    text-align: right;
+    outline: none;
+  }
+
+  .xyz-input:focus { border-color: var(--form-500); }
+  .xyz-input.x-axis { border-left: 2px solid var(--danger); }
+  .xyz-input.y-axis { border-left: 2px solid var(--success); }
+  .xyz-input.z-axis { border-left: 2px solid var(--info); }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--concrete-900); }
+  ::-webkit-scrollbar-thumb { background: var(--concrete-700); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--concrete-600); }
+
+  /* ===== HIDDEN MODES ===== */
+  .mode-content { display: none; }
+  .mode-content.active { display: block; }
+
+  /* Geometric mode right panel */
+  .transform-section .param-label {
+    margin-bottom: var(--sp-1);
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ===== TOP TOOLBAR ===== -->
+  <div class="toolbar">
+    <div class="toolbar-logo">
+      <div class="block"></div>
+      CONCRETE
+    </div>
+    <button class="toolbar-btn">File</button>
+    <button class="toolbar-btn">View</button>
+    <button class="toolbar-btn">Help</button>
+    <div class="toolbar-spacer"></div>
+    <button class="toolbar-icon-btn" title="Undo">↺</button>
+    <button class="toolbar-icon-btn" title="Redo">↻</button>
+    <div style="width: 1px; height: 24px; background: var(--concrete-700); margin: 0 8px;"></div>
+    <button class="btn-primary" id="exportBtn">EXPORT STL</button>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="main">
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="template">Template</button>
+        <button class="mode-tab" data-mode="geometric">Geometric</button>
+        <button class="mode-tab" data-mode="sculpt">Sculpt</button>
+      </div>
+
+      <!-- TEMPLATE MODE -->
+      <div class="mode-content active" id="mode-template">
+        <div class="panel-section">
+          <div class="section-header">Template</div>
+          <div class="template-grid">
+            <div class="template-card active" data-template="planter">
+              <span class="icon">⬡</span>
+              <span class="name">Planter</span>
+            </div>
+            <div class="template-card" data-template="vase">
+              <span class="icon">⏣</span>
+              <span class="name">Vase</span>
+            </div>
+            <div class="template-card" data-template="coaster">
+              <span class="icon">⬢</span>
+              <span class="name">Coaster</span>
+            </div>
+            <div class="template-card" data-template="tile">
+              <span class="icon">▦</span>
+              <span class="name">Tile</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-header">Parameters</div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Height</span>
+              <span class="param-value" id="val-height">120 mm</span>
+            </div>
+            <input type="range" min="40" max="300" value="120" data-param="height">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Outer Diameter</span>
+              <span class="param-value" id="val-diameter">100 mm</span>
+            </div>
+            <input type="range" min="30" max="250" value="100" data-param="diameter">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Wall Thickness</span>
+              <span class="param-value" id="val-wall">8 mm</span>
+            </div>
+            <input type="range" min="3" max="25" value="8" data-param="wall">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Draft Angle</span>
+              <span class="param-value" id="val-draft">3.0°</span>
+            </div>
+            <input type="range" min="0" max="15" value="3" step="0.5" data-param="draft">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Bottom Thickness</span>
+              <span class="param-value" id="val-bottom">10 mm</span>
+            </div>
+            <input type="range" min="3" max="30" value="10" data-param="bottom">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Drainage Hole</span>
+              <div class="toggle on" id="toggle-drainage">
+                <div class="knob"></div>
+              </div>
+            </div>
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Segments</span>
+              <span class="param-value" id="val-segments">64</span>
+            </div>
+            <input type="range" min="8" max="128" value="64" step="4" data-param="segments">
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <div class="section-header">Surface Pattern</div>
+          <div class="pattern-grid">
+            <div class="pattern-card active">None</div>
+            <div class="pattern-card">Ribs</div>
+            <div class="pattern-card">Facets</div>
+            <div class="pattern-card">Flute</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GEOMETRIC MODE -->
+      <div class="mode-content" id="mode-geometric">
+        <div class="panel-section">
+          <div class="section-header">Add Primitive</div>
+          <div class="primitives-grid">
+            <div class="primitive-card"><span class="shape">□</span><span class="pname">Cube</span></div>
+            <div class="primitive-card"><span class="shape">○</span><span class="pname">Sphere</span></div>
+            <div class="primitive-card"><span class="shape">△</span><span class="pname">Cylinder</span></div>
+            <div class="primitive-card"><span class="shape">◎</span><span class="pname">Torus</span></div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="section-header">Boolean Operation</div>
+          <div class="bool-ops">
+            <button class="active-bool">Union ∪</button>
+            <button>Subtract −</button>
+            <button>Intersect ∩</button>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="section-header">Scene Hierarchy</div>
+          <div class="tree-item selected">▾ Union_001</div>
+          <div class="tree-item tree-child">├ Cube_001 (80×80×120)</div>
+          <div class="tree-item tree-child">├ Cylinder_001 (∅60×100)</div>
+          <div class="tree-item tree-child">└ Sphere_001 (r=30) [SUB]</div>
+        </div>
+        <div class="panel-section transform-section">
+          <div class="section-header">Transform — Cube_001</div>
+          <div class="param-label">Position</div>
+          <div class="xyz-row">
+            <input class="xyz-input x-axis" value="0.0">
+            <input class="xyz-input y-axis" value="0.0">
+            <input class="xyz-input z-axis" value="60.0">
+          </div>
+          <div class="param-label">Rotation</div>
+          <div class="xyz-row">
+            <input class="xyz-input x-axis" value="0°">
+            <input class="xyz-input y-axis" value="0°">
+            <input class="xyz-input z-axis" value="0°">
+          </div>
+          <div class="param-label">Scale</div>
+          <div class="xyz-row">
+            <input class="xyz-input x-axis" value="1.0">
+            <input class="xyz-input y-axis" value="1.0">
+            <input class="xyz-input z-axis" value="1.0">
+          </div>
+        </div>
+      </div>
+
+      <!-- SCULPT MODE -->
+      <div class="mode-content" id="mode-sculpt">
+        <div class="panel-section">
+          <div class="section-header">Brush Tools</div>
+          <div class="primitives-grid">
+            <div class="primitive-card"><span class="shape">✋</span><span class="pname">Grab</span></div>
+            <div class="primitive-card"><span class="shape">〰</span><span class="pname">Smooth</span></div>
+            <div class="primitive-card"><span class="shape">⊕</span><span class="pname">Inflate</span></div>
+            <div class="primitive-card"><span class="shape">⊖</span><span class="pname">Pinch</span></div>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="section-header">Brush Settings</div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Radius</span>
+              <span class="param-value">24 px</span>
+            </div>
+            <input type="range" min="4" max="100" value="24">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Strength</span>
+              <span class="param-value">0.50</span>
+            </div>
+            <input type="range" min="0" max="100" value="50">
+          </div>
+          <div class="param-row">
+            <div class="param-label-row">
+              <span class="param-label">Symmetry</span>
+              <div class="toggle on" id="toggle-sym">
+                <div class="knob"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-section" style="text-align:center; color: var(--concrete-400); padding: 40px 16px;">
+          <div style="font-size: 32px; margin-bottom: 8px;">🔨</div>
+          <div style="font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;">Sculpt mode coming in Phase 8</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEWPORT -->
+    <div class="viewport">
+      <div class="viewport-grid"></div>
+
+      <!-- Placeholder 3D object -->
+      <div class="viewport-placeholder">
+        <svg width="240" height="320" viewBox="0 0 240 320">
+          <!-- Planter shape -->
+          <polygon points="70,40 170,40 190,280 50,280" fill="none" stroke="#3d3d3d" stroke-width="1.5"/>
+          <polygon points="78,48 162,48 180,272 58,272" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+          <line x1="58" y1="272" x2="180" y2="272" stroke="#2a2a2a" stroke-width="1"/>
+          <!-- Inner cavity -->
+          <polygon points="82,52 158,52 172,260 66,260" fill="none" stroke="#1e1e1e" stroke-width="0.8" stroke-dasharray="4,4"/>
+          <!-- Draft angle indicators -->
+          <line x1="70" y1="40" x2="50" y2="280" stroke="#16a34a" stroke-width="0.5" opacity="0.5"/>
+          <line x1="170" y1="40" x2="190" y2="280" stroke="#16a34a" stroke-width="0.5" opacity="0.5"/>
+          <!-- Dimension line -->
+          <line x1="200" y1="40" x2="200" y2="280" stroke="#3d3d3d" stroke-width="0.5"/>
+          <line x1="195" y1="40" x2="205" y2="40" stroke="#3d3d3d" stroke-width="0.5"/>
+          <line x1="195" y1="280" x2="205" y2="280" stroke="#3d3d3d" stroke-width="0.5"/>
+          <text x="208" y="164" fill="#3d3d3d" font-family="JetBrains Mono" font-size="9">120mm</text>
+          <!-- Bottom dimension -->
+          <line x1="50" y1="295" x2="190" y2="295" stroke="#3d3d3d" stroke-width="0.5"/>
+          <line x1="50" y1="290" x2="50" y2="300" stroke="#3d3d3d" stroke-width="0.5"/>
+          <line x1="190" y1="290" x2="190" y2="300" stroke="#3d3d3d" stroke-width="0.5"/>
+          <text x="100" y="310" fill="#3d3d3d" font-family="JetBrains Mono" font-size="9">100mm</text>
+        </svg>
+      </div>
+
+      <!-- Axis gizmo -->
+      <svg class="viewport-gizmo" viewBox="0 0 60 60">
+        <line x1="30" y1="30" x2="55" y2="38" stroke="#dc2626" stroke-width="2"/>
+        <text x="52" y="50" fill="#dc2626" font-family="JetBrains Mono" font-size="9" font-weight="700">X</text>
+        <line x1="30" y1="30" x2="30" y2="5" stroke="#16a34a" stroke-width="2"/>
+        <text x="33" y="8" fill="#16a34a" font-family="JetBrains Mono" font-size="9" font-weight="700">Y</text>
+        <line x1="30" y1="30" x2="12" y2="42" stroke="#2563eb" stroke-width="2"/>
+        <text x="2" y="48" fill="#2563eb" font-family="JetBrains Mono" font-size="9" font-weight="700">Z</text>
+      </svg>
+
+      <div class="viewport-info">
+        <span>ORBIT: LMB</span>
+        <span>PAN: MMB</span>
+        <span>ZOOM: SCROLL</span>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="panel-section">
+        <div class="section-header">Mold Generation</div>
+        <div class="mold-type-toggle">
+          <button class="mold-type-btn active" data-mold="1part">1-Part</button>
+          <button class="mold-type-btn" data-mold="2part">2-Part</button>
+        </div>
+      </div>
+      <div class="panel-section">
+        <div class="mold-param">
+          <span class="param-label">Wall Margin</span>
+          <input class="input-number" value="10 mm">
+        </div>
+        <div class="mold-param">
+          <span class="param-label">Bottom Margin</span>
+          <input class="input-number" value="10 mm">
+        </div>
+        <div class="mold-param">
+          <span class="param-label">Pour Hole ∅</span>
+          <input class="input-number" value="25 mm">
+        </div>
+        <button class="btn-primary btn-full" id="generateMoldBtn">GENERATE MOLD</button>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">Analysis</div>
+        <div class="analysis-card">
+          <div>
+            <div class="label">Draft Angle</div>
+            <div class="detail detail-ok">All faces > 3° ✓</div>
+          </div>
+          <span class="badge badge-ok">OK</span>
+        </div>
+        <div class="analysis-card">
+          <div>
+            <div class="label">Wall Thickness</div>
+            <div class="detail detail-ok">Min: 8mm (≥ 5mm) ✓</div>
+          </div>
+          <span class="badge badge-ok">OK</span>
+        </div>
+        <div class="analysis-card">
+          <div>
+            <div class="label">Printability</div>
+            <div class="detail detail-warn">2 overhangs > 45°</div>
+          </div>
+          <span class="badge badge-warn">WARN</span>
+        </div>
+        <div class="analysis-card">
+          <div>
+            <div class="label">Manifold</div>
+            <div class="detail detail-ok">Watertight mesh ✓</div>
+          </div>
+          <span class="badge badge-ok">OK</span>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">Shrinkage Compensation</div>
+        <div class="mold-param">
+          <span class="param-label">Material</span>
+        </div>
+        <select class="select-input">
+          <option>Portland Cement (1.5%)</option>
+          <option>White Cement (1.2%)</option>
+          <option>GFRC (0.8%)</option>
+          <option>Epoxy Resin (0.5%)</option>
+          <option>Jesmonite (1.0%)</option>
+          <option>Custom...</option>
+        </select>
+        <div class="mold-param" style="margin-top: 8px;">
+          <span class="param-label">Scale Factor</span>
+          <span class="param-value">1.015×</span>
+        </div>
+      </div>
+
+      <div class="panel-section">
+        <div class="section-header">Export</div>
+        <div class="export-row">
+          <button class="btn-secondary">Model STL</button>
+          <button class="btn-secondary">Mold STL</button>
+        </div>
+        <button class="btn-primary btn-full">EXPORT BOTH</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STATUS BAR ===== -->
+  <div class="status-bar">
+    <span class="status-item">VERTICES: <strong style="color: var(--concrete-100);">4,096</strong></span>
+    <span class="status-item">FACES: <strong style="color: var(--concrete-100);">8,192</strong></span>
+    <span class="status-item">VOLUME: <strong style="color: var(--concrete-100);">523.4 cm³</strong></span>
+    <span class="status-item">WEIGHT: <strong style="color: var(--concrete-100);">~1.2 kg</strong></span>
+    <div class="status-spacer"></div>
+    <span class="status-item">UNITS: MM</span>
+    <span class="status-item">GRID: ON</span>
+  </div>
+</div>
+
+<script>
+  // ===== MODE SWITCHING =====
+  const modeTabs = document.querySelectorAll('.mode-tab');
+  const modeContents = document.querySelectorAll('.mode-content');
+
+  modeTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      modeTabs.forEach(t => t.classList.remove('active'));
+      modeContents.forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('mode-' + tab.dataset.mode).classList.add('active');
+    });
+  });
+
+  // ===== TEMPLATE SELECTION =====
+  const templateCards = document.querySelectorAll('.template-card');
+  templateCards.forEach(card => {
+    card.addEventListener('click', () => {
+      templateCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+
+  // ===== PATTERN SELECTION =====
+  const patternCards = document.querySelectorAll('.pattern-card');
+  patternCards.forEach(card => {
+    card.addEventListener('click', () => {
+      patternCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    });
+  });
+
+  // ===== SLIDER VALUES =====
+  const sliderMap = {
+    height: { el: 'val-height', suffix: ' mm' },
+    diameter: { el: 'val-diameter', suffix: ' mm' },
+    wall: { el: 'val-wall', suffix: ' mm' },
+    draft: { el: 'val-draft', suffix: '°' },
+    bottom: { el: 'val-bottom', suffix: ' mm' },
+    segments: { el: 'val-segments', suffix: '' },
+  };
+
+  document.querySelectorAll('input[type="range"][data-param]').forEach(slider => {
+    slider.addEventListener('input', () => {
+      const cfg = sliderMap[slider.dataset.param];
+      if (cfg) {
+        document.getElementById(cfg.el).textContent = slider.value + cfg.suffix;
+      }
+    });
+  });
+
+  // ===== TOGGLES =====
+  document.querySelectorAll('.toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('on');
+    });
+  });
+
+  // ===== MOLD TYPE =====
+  const moldBtns = document.querySelectorAll('.mold-type-btn');
+  moldBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      moldBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // ===== BOOLEAN OPS =====
+  const boolBtns = document.querySelectorAll('.bool-ops button');
+  boolBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      boolBtns.forEach(b => b.classList.remove('active-bool'));
+      btn.classList.add('active-bool');
+    });
+  });
+
+  // ===== GENERATE MOLD FEEDBACK =====
+  document.getElementById('generateMoldBtn').addEventListener('click', function() {
+    this.textContent = 'GENERATING...';
+    this.style.opacity = '0.7';
+    setTimeout(() => {
+      this.textContent = 'MOLD GENERATED ✓';
+      this.style.opacity = '1';
+      setTimeout(() => {
+        this.textContent = 'GENERATE MOLD';
+      }, 2000);
+    }, 800);
+  });
+
+  // ===== SCENE TREE SELECTION =====
+  document.querySelectorAll('.tree-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.tree-item').forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+    });
+  });
+</script>
+
+</body>
+</html>

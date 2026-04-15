@@ -1,0 +1,361 @@
+.left-panel {
+  width: 280px;
+  min-width: 280px;
+  background: var(--concrete-900);
+  border-right: 1px solid var(--concrete-700);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.panel-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ===== MODE TABS ===== */
+.mode-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--concrete-700);
+  flex-shrink: 0;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--concrete-400);
+  cursor: pointer;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  border-radius: 0;
+}
+
+.mode-tab:hover { color: var(--concrete-200); }
+.mode-tab.active {
+  color: var(--form-500);
+  border-bottom-color: var(--form-500);
+}
+
+/* ===== PANEL SECTION ===== */
+.panel-section {
+  padding: var(--sp-4);
+  border-bottom: 1px solid var(--concrete-700);
+}
+
+.section-header {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--form-500);
+  margin-bottom: var(--sp-3);
+}
+
+/* ===== TEMPLATE GRID ===== */
+.template-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-2);
+}
+
+.template-card {
+  background: var(--concrete-800);
+  border: 1px solid var(--concrete-700);
+  padding: var(--sp-3);
+  text-align: center;
+  cursor: pointer;
+}
+
+.template-card:hover { border-color: var(--concrete-400); }
+.template-card.active { border-color: var(--form-500); }
+
+.template-card-icon {
+  font-size: 28px;
+  margin-bottom: var(--sp-1);
+  color: var(--concrete-400);
+  display: block;
+}
+.template-card.active .template-card-icon { color: var(--form-500); }
+
+.template-card-name {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--concrete-300);
+}
+.template-card.active .template-card-name { color: var(--concrete-100); }
+
+.template-description {
+  margin-top: var(--sp-2);
+  font-size: 9px;
+  color: var(--concrete-400);
+  line-height: 1.4;
+}
+
+/* ===== PARAM ROWS ===== */
+.param-row {
+  margin-bottom: var(--sp-3);
+}
+
+.param-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--sp-1);
+}
+
+.param-label {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--concrete-400);
+}
+
+.param-value {
+  font-size: 10px;
+  color: var(--concrete-100);
+  font-family: var(--font-mono);
+}
+
+/* ===== TOGGLE ===== */
+.toggle {
+  width: 36px;
+  height: 18px;
+  background: var(--concrete-800);
+  border: 1px solid var(--concrete-600);
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.toggle.on { border-color: var(--form-500); }
+
+.toggle-knob {
+  width: 14px;
+  height: 14px;
+  background: var(--concrete-400);
+  position: absolute;
+  top: 1px;
+  left: 1px;
+}
+
+.toggle.on .toggle-knob {
+  left: 19px;
+  background: var(--form-500);
+}
+
+/* ===== PATTERN GRID ===== */
+.pattern-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-1);
+}
+
+.pattern-card {
+  background: var(--concrete-800);
+  border: 1px solid var(--concrete-700);
+  padding: var(--sp-2) var(--sp-1);
+  text-align: center;
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--concrete-400);
+}
+
+.pattern-card:hover { border-color: var(--concrete-400); }
+.pattern-card.active { border-color: var(--form-500); color: var(--form-500); }
+
+/* ===== PRIMITIVES (Geometric mode) ===== */
+.primitives-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-2);
+}
+
+.primitive-card {
+  background: var(--concrete-800);
+  border: 1px solid var(--concrete-700);
+  padding: var(--sp-2);
+  text-align: center;
+  cursor: pointer;
+}
+
+.primitive-card:hover { border-color: var(--concrete-400); }
+
+.primitive-card-shape {
+  font-size: 22px;
+  color: var(--concrete-400);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.primitive-card-name {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--concrete-400);
+}
+
+/* ===== BOOLEAN OPS ===== */
+.bool-ops {
+  display: flex;
+  gap: var(--sp-1);
+}
+
+.bool-op-btn {
+  flex: 1;
+  padding: 6px 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: transparent;
+  color: var(--concrete-400);
+  border: 1px solid var(--concrete-600);
+  border-radius: 0;
+}
+
+.bool-op-btn.active {
+  background: var(--form-500);
+  color: var(--concrete-950);
+  border-color: var(--form-500);
+}
+
+/* ===== SCENE TREE ===== */
+.tree-item {
+  padding: 4px 8px;
+  font-size: 10px;
+  color: var(--concrete-300);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.tree-item:hover { background: var(--concrete-800); }
+.tree-item.selected {
+  border-color: var(--form-500);
+  background: var(--concrete-800);
+  color: var(--concrete-100);
+}
+
+.tree-child { padding-left: 24px; }
+
+/* ===== XYZ INPUTS ===== */
+.xyz-row {
+  display: flex;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-2);
+}
+
+.xyz-input {
+  flex: 1;
+  background: var(--concrete-800);
+  border: 1px solid var(--concrete-600);
+  color: var(--concrete-100);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 4px 6px;
+  text-align: right;
+  outline: none;
+  border-radius: 0;
+}
+
+.xyz-input:focus { border-color: var(--form-500); }
+.xyz-input.x-axis { border-left: 2px solid var(--danger); }
+.xyz-input.y-axis { border-left: 2px solid var(--success); }
+.xyz-input.z-axis { border-left: 2px solid var(--info); }
+
+/* ===== SCENE TREE (enhanced) ===== */
+.tree-node-op {
+  display: inline-block;
+  width: 14px;
+  color: var(--form-500);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.tree-node-name {
+  margin-right: var(--sp-1);
+}
+
+.tree-node-size {
+  color: var(--concrete-400);
+  font-size: 9px;
+}
+
+.scene-empty {
+  text-align: center;
+  color: var(--concrete-400);
+  font-size: 10px;
+  padding: var(--sp-4) var(--sp-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scene-actions {
+  margin-top: var(--sp-2);
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===== NODE ACTIONS ===== */
+.node-actions {
+  display: flex;
+  gap: var(--sp-1);
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 9px;
+}
+
+.btn-danger {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background: var(--danger);
+  color: var(--concrete-950);
+}
+
+/* ===== SCULPT ===== */
+.sculpt-tips {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.sculpt-tip {
+  font-size: 9px;
+  color: var(--concrete-400);
+  line-height: 1.5;
+}
+
+.primitive-card.active {
+  border-color: var(--form-500);
+}
+
+.primitive-card.active .primitive-card-shape {
+  color: var(--form-500);
+}
+
+.primitive-card.active .primitive-card-name {
+  color: var(--concrete-100);
+}
